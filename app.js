@@ -1,4 +1,5 @@
 const formEle = document.querySelector("form");
+let streetEle = document.querySelector(".streets");
 formEle.addEventListener("submit", function(e) {
     street = e.target.querySelector("input");
     streetSearch(street.value)
@@ -14,10 +15,20 @@ function streetSearch(query) {
                 throw new Error("Something went Wrong!");
             }
         }).then(data => {
-            updateStreetList();
+            const streetList = [];
+            streetList.push(data.streets);
+            console.log(streetList);
+            updateStreetList(streetList[0]);
+
         })
 }
 
-function updateStreetList() {
+function updateStreetList(data) {
+    streetEle.innerHTML = ""
+    data.forEach(function(street) {
+        streetEle.insertAdjacentHTML(`afterbegin`,
+            ` <a href="#" data-street-key="${street.key}">${street.name}</a>`
+        );
+    })
 
 };
