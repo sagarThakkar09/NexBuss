@@ -9,7 +9,7 @@ formEle.addEventListener("submit", function(e) {
 });
 
 function streetSearch(query) {
-    fetch(`https://api.winnipegtransit.com/v3/streets.json?api-key=yywi4QKxinQ3PzCgMK6u&name=${query}`)
+    fetch(`https://api.winnipegtransit.com/v3/streets.json?name=${query}&usage=long&api-key=yywi4QKxinQ3PzCgMK6u`)
         .then(resp => {
             if (resp.ok) {
                 return resp.json();
@@ -29,7 +29,7 @@ function updateStreetList(data) {
 };
 
 streetEle.addEventListener("click", function(e) {
-    fetch(`https://api.winnipegtransit.com/v3/stops.json?street=${e.target.dataset.streetKey}&api-key=ZPFv2Zx6ny1KrlPKnfe`)
+    fetch(`https://api.winnipegtransit.com/v3/stops.json?street=${e.target.dataset.streetKey}&api-key=yywi4QKxinQ3PzCgMK6u`)
         .then(resp => {
             if (resp.ok) {
                 return resp.json();
@@ -41,6 +41,19 @@ streetEle.addEventListener("click", function(e) {
 
 function getStops(stopList) {
     stopList.forEach(function(stop) {
-        console.log(stop.key);
+        fetch(`https://api.winnipegtransit.com/v3/stops/${stop.key}/schedule.json?max-results-per-route=2&api-key=yywi4QKxinQ3PzCgMK6u`)
+            .then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+            }).then(data => {
+                updataSchedule(data)
+            })
     })
+}
+
+function updataSchedule(scheduleList) {
+
+    console.log(scheduleList[`${["stop-schedule"]}`].stop.street.name);
+
 }
