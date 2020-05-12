@@ -54,6 +54,14 @@ function getStops(stopList) {
 }
 
 function updataSchedule(scheduleList) {
+    console.log(scheduleList.stop.street.name)
 
+    tabel.insertAdjacentHTML('afterbegin', `<tr>
+  <td>${scheduleList.stop.street.name}</td>
+  <td>Scurfield Boulevard</td>
+  <td>Northbound</td>
+  <td>74</td>
+  <td>11:08 AM</td>
+  </tr>`)
 
 }
