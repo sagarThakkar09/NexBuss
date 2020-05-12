@@ -1,6 +1,7 @@
 const formEle = document.querySelector("form");
 let streetEle = document.querySelector(".streets");
 const result = document.querySelector("#street-name");
+const tabel = document.querySelector("tbody");
 
 formEle.addEventListener("submit", function(e) {
     street = e.target.querySelector("input");
@@ -47,13 +48,12 @@ function getStops(stopList) {
                     return resp.json();
                 }
             }).then(data => {
-                updataSchedule(data)
+                updataSchedule(data[`${["stop-schedule"]}`]);
             })
     })
 }
 
 function updataSchedule(scheduleList) {
 
-    console.log(scheduleList[`${["stop-schedule"]}`].stop.street.name);
 
 }
