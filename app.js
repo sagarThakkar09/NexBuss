@@ -1,7 +1,7 @@
 const formEle = document.querySelector("form");
-let streetEle = document.querySelector(".streets");
-const result = document.querySelector("#street-name");
 const tabel = document.querySelector("tbody");
+const titleBar = document.querySelector("#street-name");
+const streetEle = document.querySelector(".streets");
 
 formEle.addEventListener("submit", function(e) {
     street = e.target.querySelector("input");
@@ -18,7 +18,11 @@ function streetSearch(query) {
                 throw new Error("Something went Wrong!");
             }
         }).then(data => {
-            updateStreetList(data.streets);
+            if (Object.keys(data.streets).length === 0) {
+                streetEle.innerHTML = "No Streets found";
+            } else {
+                updateStreetList(data.streets);
+            }
         })
 }
 
@@ -49,11 +53,19 @@ function getStops(stopList) {
                 }
             }).then(data => {
                 updataSchedule(data[`${["stop-schedule"]}`]);
+
             })
     })
 }
 
 function updataSchedule(scheduleList) {
-
+    tabel.insertAdjacentHTML('afterbegin', `<tr>
+  <td>${scheduleList.stop.street.name}</td> 
+  <td>${scheduleList.stop["cross-street"].name}</td>
+  <td>${scheduleList.stop.direction}</td>
+  <td>${scheduleList["route-schedules"][0].route.number}</td>
+  <td>${new Date(scheduleList["route-schedules"][0]["scheduled-stops"][0].times.departure.estimated).toLocaleTimeString()}</td>
+  </tr>`)
+    titleBar.textContent = `Displaying results for ${scheduleList.stop.street.name}`
 
 }
