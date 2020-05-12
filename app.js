@@ -6,7 +6,9 @@ const streetEle = document.querySelector(".streets");
 formEle.addEventListener("submit", function(e) {
     street = e.target.querySelector("input");
     streetSearch(street.value)
+    street.value = "";
     e.preventDefault();
+
 });
 
 function streetSearch(query) {
