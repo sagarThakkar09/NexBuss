@@ -54,14 +54,13 @@ function getStops(stopList) {
 }
 
 function updataSchedule(scheduleList) {
-    console.log(scheduleList.stop.street.name)
-
+    console.log(new Date(scheduleList["route-schedules"][0]["scheduled-stops"][0].times.departure.estimated).toLocaleTimeString());
     tabel.insertAdjacentHTML('afterbegin', `<tr>
-  <td>${scheduleList.stop.street.name}</td>
-  <td>Scurfield Boulevard</td>
-  <td>Northbound</td>
-  <td>74</td>
-  <td>11:08 AM</td>
+  <td>${scheduleList.stop.street.name}</td> 
+  <td>${scheduleList.stop["cross-street"].name}</td>
+  <td>${scheduleList.stop.direction}</td>
+  <td>${scheduleList["route-schedules"][0].route.number}</td>
+  <td>${new Date(scheduleList["route-schedules"][0]["scheduled-stops"][0].times.departure.estimated).toLocaleTimeString()}</td>
   </tr>`)
 
 }
